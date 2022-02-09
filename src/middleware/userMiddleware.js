@@ -3,6 +3,7 @@ const {uploadFile} = require('../aws')
 const jwt = require("jsonwebtoken")
 
 const urlOfProfileImage = async function (req, res, next) {
+    try{
     let files = req.files;
     
     if (files && files.length > 0) {        
@@ -15,9 +16,13 @@ const urlOfProfileImage = async function (req, res, next) {
     else {
         res.status(400).send({ status: false, msg: "No file to write" });
     }
+    }catch(err){
+        res.status(500).send({status:false,msg:err.msg})
+    }
 }
 
 const urlOfProfileImageForUpdate = async function (req, res, next) {
+    try{
     let files = req.files;
     if (files && files.length > 0) {
         //upload to s3 and return true..incase of error in uploading this will goto catch block( as rejected promise)
@@ -29,10 +34,13 @@ const urlOfProfileImageForUpdate = async function (req, res, next) {
     else {
         next()
     }
+}catch(err){
+    res.status(500).send({status:false,msg:err.msg})
+}
 }
 
 const authToken = function (req, res, next) {
-    try {
+   try {
         let token = req.header('Authorization', 'Bearer Token')
         if(!token){
             return res.status(401).send({ status: false, msg: "missing authentication token" })
@@ -48,7 +56,6 @@ const authToken = function (req, res, next) {
             if (decodeToken) {
                 req.userId = decodeToken.userId
                 next()
-
             } else {
                 res.status(401).send({ status: false, msg: "not a valid token" })
             }

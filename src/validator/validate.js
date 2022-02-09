@@ -48,7 +48,7 @@ const validPrice = function(price) {
 return curRegExp.test(price)
 }
 const validforStatus = function (value) {
-    if (["pending", "completed", "cancled"].indexOf(value) == -1) { return false } //mean's he have not found it
+    if (["pending", "completed", "cancled"].indexOf(value) == -1) { return false } // mean's he have not found it
     if (["pending", "completed", "cancled"].indexOf(value) > -1) { return true }   //mean's he have found it
 }
 module.exports = { isValid,validforEnum, isValidRequestBody, validateEmail,isValidObjectId,

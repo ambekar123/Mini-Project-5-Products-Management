@@ -168,6 +168,7 @@ const getUserProfileById = async function (req, res) {
         res.status(500).send({ status: false, message: error.message })
     }
 }
+
 const updateUser = async function (req, res) {
     try {
         const userId = req.params.userId
